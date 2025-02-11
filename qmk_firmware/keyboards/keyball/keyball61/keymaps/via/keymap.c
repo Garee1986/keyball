@@ -93,6 +93,22 @@ void keyboard_post_init_user(void) {
     rgblight_layers = my_rgb_layers;
 }
 
+bool led_update_user(led_t led_state) {
+    rgblight_set_layer_state(0, led_state.caps_lock);
+    return true;
+}
+
+layer_state_t default_layer_state_set_user(layer_state_t state) {
+    rgblight_set_layer_state(1, layer_state_cmp(state, _DVORAK));
+    return state;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    rgblight_set_layer_state(2, layer_state_cmp(state, _FN));
+    rgblight_set_layer_state(3, layer_state_cmp(state, _ADJUST));
+    return state;
+}
+
 #ifdef OLED_ENABLE
 
 #    include "lib/oledkit/oledkit.h"
